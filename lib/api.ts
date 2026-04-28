@@ -3,13 +3,14 @@ import { z } from "zod";
 
 import type { HealthResponse, MetricRow, MetricsResponse } from "@/lib/types";
 
-const runtimeBaseUrl = process.env.NEXT_PUBLIC_API_URL;
-// Log the API URL for debugging (this will show in the browser console)
+const runtimeBaseUrl = process.env.NEXT_PUBLIC_API_URL || "https://debias.onrender.com";
+
+// Log the API URL for debugging
 if (typeof window !== "undefined") {
-  console.log("DeBias API URL Initialized:", runtimeBaseUrl || "NOT_SET (Falling back to current domain)");
+  console.log("DeBias API URL Initialized:", runtimeBaseUrl);
 }
 
-const API_BASE = runtimeBaseUrl ? runtimeBaseUrl.replace(/\/$/, "") : "";
+const API_BASE = runtimeBaseUrl.replace(/\/$/, "");
 
 if (process.env.NODE_ENV === "production" && !runtimeBaseUrl) {
   console.warn(
