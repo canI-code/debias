@@ -6,10 +6,8 @@ const nextConfig = {
   // Generates a plain static `out/` directory.
   // Cloudflare Pages build settings: Build command = `npm run build`, Output = `out`
   output: "export",
-  trailingSlash: true, // Cloudflare serves /chat/ → /chat/index.html
 
   // Static export does not support Next.js Image Optimization server.
-  // Images are served as-is from /public.
   images: {
     unoptimized: true,
   },
