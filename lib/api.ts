@@ -3,8 +3,8 @@ import { z } from "zod";
 
 import type { HealthResponse, MetricRow, MetricsResponse } from "@/lib/types";
 
-const runtimeBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? process.env.NEXT_PUBLIC_API_BASE_URL;
-const API_BASE = runtimeBaseUrl || "http://localhost:8000";
+const runtimeBaseUrl = process.env.NEXT_PUBLIC_API_URL;
+const API_BASE = runtimeBaseUrl ? runtimeBaseUrl.replace(/\/$/, "") : "";
 
 if (process.env.NODE_ENV === "production" && !runtimeBaseUrl) {
   console.warn(

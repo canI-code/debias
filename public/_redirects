@@ -1,3 +1,2 @@
-/chat /chat/index.html 200
-/dashboard /dashboard/index.html 200
+# Standard SPA redirect for Cloudflare Pages
 /* /index.html 200
