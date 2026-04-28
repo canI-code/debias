@@ -35,7 +35,6 @@ frontend/.env.*
 # Local dev artifacts
 for-ai/
 PROJECT_WORK_AND_FILE_GUIDE.md
-main.py
 
 # Build artifacts
 build/
