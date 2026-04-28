@@ -33,8 +33,8 @@ export function useFairnessMetrics(): FairnessMetricsResult {
       const metrics = await getMetrics();
       return metrics.rows;
     },
-    refetchInterval: isTabVisible ? 10_000 : false,
-    staleTime: 5_000,
+    refetchInterval: isTabVisible ? 5_000 : false,
+    staleTime: 3_000,
     // Don't retry on 400/4xx — those are config errors, not transient failures
     retry: (failureCount, error) => {
       if (error instanceof Error && error.message.includes("400")) return false;

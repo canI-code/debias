@@ -264,8 +264,8 @@ def score_and_tag(log_entry: dict[str, Any]) -> dict[str, Any]:
             "stereotype_score": stereotype_score,
             "refusal_prob": refusal_prob,
             "sentiment": sentiment,
-            "group_proxy": hash_sensitive(group_proxy_plain),
-            "intersection_key": hash_sensitive(intersection_plain),
+            "group_proxy": group_proxy_plain,
+            "intersection_key": intersection_plain,
             "scored_at": utcnow().isoformat(),
         }
         enqueue_scored_job(scored_entry)
