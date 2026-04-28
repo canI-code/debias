@@ -7,7 +7,7 @@ from typing import Any
 from uuid import uuid4
 
 from pydantic import AliasChoices, BaseModel, Field, field_validator
-from sqlalchemy import Boolean, DateTime, Float, Index, Integer, String, Text
+from sqlalchemy import Boolean, DateTime, Float, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from backend.database import Base
