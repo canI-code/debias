@@ -1,0 +1,62 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+        node-version: ["20"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install -r requirements.txt
+          python -m pip install ruff mypy
+          npm install --no-audit --no-fund
+      - name: Lint
+        run: |
+          ruff check backend tests
+          npx eslint . --ext .ts,.tsx --max-warnings=0
+      - name: Type check
+        run: |
+          mypy backend --ignore-missing-imports
+          npx tsc --noEmit
+      - name: Backend tests and coverage
+        run: pytest -v --cov=backend --cov-report=xml --cov-report=term-missing --cov-fail-under=80
+      - name: Frontend build
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:8000
+        run: npm run build
+      - name: Compose config validation
+        run: docker compose -f docker-compose.prod.yml config
+      - name: E2E smoke health check
+        env:
+          APP_ENV: local
+          LLM_API_KEY: test-key
+          SALT: test-salt-12345678
+          DATABASE_URL: sqlite+aiosqlite:///./ci.db
+          REDIS_URL: redis://localhost:6379/0
+          CORS_ORIGINS: http://localhost:3000
+        run: |
+          python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000 &
+          APP_PID=$!
+          trap "kill $APP_PID" EXIT
+          sleep 5
+          curl -fsS http://127.0.0.1:8000/health
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-xml
+          path: coverage.xml

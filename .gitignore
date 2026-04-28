@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+*.so
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage/
+htmlcov/
+*.db
+fair_llm_backend.db
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+.npm/
+.pnpm-store/
+.eslintcache
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!.env.prod.example
+.env.runtime
+frontend/.env.local
+frontend/.env.*
+
+# Local dev artifacts
+for-ai/
+PROJECT_WORK_AND_FILE_GUIDE.md
+main.py
+
+# Build artifacts
+build/
+dist/
+
+# Docker and containers
+*.pid
+*.log
+
+# Audit and generated artifacts
+DIRECTORY_AUDIT*.txt
+FILE_AUDIT*.txt
+
+# OS files
+.DS_Store
+Thumbs.db
